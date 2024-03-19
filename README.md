@@ -2,9 +2,7 @@
 
 ## Introduction
 
-An Android application that fetches a track recorded by me from the [EnviroCar API](https://envirocar.github.io/enviroCar-server/api/) & renders it using [MapLibre Android](https://github.com/maplibre/maplibre-native/tree/main/platform/android).
-
-The code follows [MVVM & official architecture guidelines](https://developer.android.com/topic/architecture).
+An Android application that fetches a track recorded by me from the [EnviroCar API](https://envirocar.github.io/enviroCar-server/api/) & renders it using [MapLibre Android](https://github.com/maplibre/maplibre-native/tree/main/platform/android). The code follows [MVVM & official architecture guidelines](https://developer.android.com/topic/architecture).
 
 ## Video
 
