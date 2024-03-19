@@ -7,6 +7,9 @@ import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.Path
 
+/**
+ * EnviroCarService
+ */
 interface EnviroCarService {
     @Headers("Accept: application/json")
     @GET("users/{username}/tracks/{trackId}")
@@ -18,7 +21,6 @@ interface EnviroCarService {
     ): TrackResponse
 
     companion object {
-        const val USER = "alexmercerind"
-        const val TOKEN = "alexalex123@A"
+        const val BASE_URL = "https://envirocar.org/api/stable/"
     }
 }
