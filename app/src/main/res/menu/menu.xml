@@ -4,7 +4,7 @@
 
     <item
         android:icon="@drawable/baseline_directions_car_24"
+        android:tint="?attr/colorOnSurface"
         android:title="@string/details"
-        app:showAsAction="ifRoom"
-        app:tint="?attr/colorOnSurface" />
+        app:showAsAction="never" />
 </menu>
