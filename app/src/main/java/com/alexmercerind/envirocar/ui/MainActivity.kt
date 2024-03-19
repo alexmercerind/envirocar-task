@@ -1,32 +1,45 @@
 package com.alexmercerind.envirocar.ui
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.alexmercerind.envirocar.R
-import com.alexmercerind.envirocar.repository.EnviroCarRepository
-import com.alexmercerind.envirocar.util.Constants
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.alexmercerind.envirocar.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    @Inject
-    lateinit var repository: EnviroCarRepository
+    private lateinit var binding: ActivityMainBinding
+    private val viewModel: MainActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        GlobalScope.launch(Dispatchers.IO) {
-            repository.track(
-                Constants.USERNAME,
-                Constants.TRACK_ID,
-                Constants.USERNAME,
-                Constants.TOKEN
-            )
+        lifecycleScope.launch(Dispatchers.IO) {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.sensor.filterNotNull().collect {
+                    withContext(Dispatchers.Main) {
+                        binding.materialToolbar.title = it.manufacturer
+                    }
+                }
+            }
+        }
+        lifecycleScope.launch(Dispatchers.IO) {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.points.collect {
+                    withContext(Dispatchers.Main) {
+
+                    }
+                }
+            }
         }
     }
 }
