@@ -13,7 +13,7 @@ import retrofit2.http.Path
 interface EnviroCarService {
     @Headers("Accept: application/json")
     @GET("users/{username}/tracks/{trackId}")
-    fun track(
+    suspend fun track(
         @Path("username") username: String,
         @Path("trackId") trackId: String,
         @Header("X-User") user: String,

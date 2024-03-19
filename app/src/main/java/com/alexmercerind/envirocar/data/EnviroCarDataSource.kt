@@ -7,7 +7,7 @@ import javax.inject.Inject
  * EnviroCarDataSource
  */
 class EnviroCarDataSource @Inject constructor(private val service: EnviroCarService) {
-    fun track(
+    suspend fun track(
         username: String,
         trackId: String,
         user: String,

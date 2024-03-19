@@ -27,8 +27,8 @@ class ApplicationModule {
             .build()
         return Retrofit.Builder()
             .client(client)
-            .baseUrl(EnviroCarService.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(EnviroCarService.BASE_URL)
             .build()
             .create(EnviroCarService::class.java)
     }
