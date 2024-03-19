@@ -23,7 +23,7 @@ class ApplicationModule {
     @Singleton
     fun provideEnviroCarService(): EnviroCarService {
         val client = OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
+            .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.NONE })
             .build()
         return Retrofit.Builder()
             .client(client)

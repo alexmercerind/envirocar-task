@@ -5,7 +5,9 @@ import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.alexmercerind.envirocar.data.remote.envirocar.dto.Feature
+import com.alexmercerind.envirocar.data.remote.envirocar.dto.Properties
 import com.alexmercerind.envirocar.data.remote.envirocar.dto.SensorProperties
+import com.alexmercerind.envirocar.data.remote.envirocar.dto.TrackProperties
 import com.alexmercerind.envirocar.repository.EnviroCarRepository
 import com.alexmercerind.envirocar.util.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,10 +21,10 @@ class MainActivityViewModel @Inject constructor(
     private val repository: EnviroCarRepository,
     private val application: Application
 ) : AndroidViewModel(application) {
-    private val _sensor: MutableStateFlow<SensorProperties?> = MutableStateFlow(null)
-    val sensor = _sensor.asStateFlow()
+    private val _details: MutableStateFlow<TrackProperties?> = MutableStateFlow(null)
+    val details = _details.asStateFlow()
 
-    private val _points = MutableStateFlow<List<Feature?>>(emptyList())
+    private val _points = MutableStateFlow<List<Feature>?>(null)
     val points = _points.asStateFlow()
 
     init {
@@ -34,7 +36,7 @@ class MainActivityViewModel @Inject constructor(
                     Constants.USERNAME,
                     Constants.TOKEN
                 )
-                _sensor.value = response.properties.sensor.properties
+                _details.value = response.properties
                 _points.value = response.features
             } catch (e: Exception) {
                 e.printStackTrace()
