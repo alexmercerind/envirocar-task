@@ -10,6 +10,7 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 /**
@@ -27,6 +28,7 @@ class ApplicationModule {
         return Retrofit.Builder()
             .client(client)
             .baseUrl(EnviroCarService.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(EnviroCarService::class.java)
     }
