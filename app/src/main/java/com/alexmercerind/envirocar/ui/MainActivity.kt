@@ -1,6 +1,7 @@
 package com.alexmercerind.envirocar.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -16,10 +17,14 @@ import com.google.gson.GsonBuilder
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory
 import com.mapbox.mapboxsdk.geometry.LatLng
 import com.mapbox.mapboxsdk.geometry.LatLngBounds
+import com.mapbox.mapboxsdk.maps.Style
+import com.mapbox.mapboxsdk.maps.Style.Builder.LayerWrapper
 import com.mapbox.mapboxsdk.plugins.annotation.LineManager
 import com.mapbox.mapboxsdk.plugins.annotation.LineOptions
 import com.mapbox.mapboxsdk.plugins.annotation.SymbolManager
 import com.mapbox.mapboxsdk.plugins.annotation.SymbolOptions
+import com.mapbox.mapboxsdk.style.layers.Layer
+import com.mapbox.mapboxsdk.utils.BitmapUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.filterNotNull
@@ -69,7 +74,7 @@ class MainActivity : AppCompatActivity() {
                     withContext(Dispatchers.Main) {
 
                         binding.mapView.getMapAsync { map ->
-                            map.setStyle(Constants.MAP_STYLE)
+                            map.setStyle(Style.Builder().fromUri("asset://style.json"))
                             map.setMinZoomPreference(1.0)
                             map.setMaxZoomPreference(20.0)
 
@@ -78,7 +83,6 @@ class MainActivity : AppCompatActivity() {
                             }
 
                             map.getStyle { style ->
-
                                 style.addImage(
                                     MARKER,
                                     AppCompatResources.getDrawable(
@@ -86,7 +90,6 @@ class MainActivity : AppCompatActivity() {
                                         R.mipmap.ic_symbol_icon
                                     )!!
                                 )
-
                                 val lineManager = LineManager(binding.mapView, map, style)
                                 val symbolManager = SymbolManager(binding.mapView, map, style)
 
@@ -103,26 +106,20 @@ class MainActivity : AppCompatActivity() {
                                 symbolManager.create(
                                     SymbolOptions()
                                         .withIconImage(MARKER)
-                                        .withIconSize(1.5F)
                                         .withLatLng(points.first())
-                                        .withTextAnchor(getString(R.string.start))
                                 )
 
                                 // End position.
                                 symbolManager.create(
                                     SymbolOptions()
                                         .withIconImage(MARKER)
-                                        .withIconSize(1.5F)
                                         .withLatLng(points.last())
-                                        .withTextAnchor(getString(R.string.end))
                                 )
 
                                 // Move camera to show available points.
                                 val bounds = LatLngBounds.fromLatLngs(points)
                                 map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 80))
                             }
-
-
                         }
                     }
                 }
