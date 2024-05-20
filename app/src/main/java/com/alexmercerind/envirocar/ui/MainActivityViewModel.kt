@@ -5,8 +5,6 @@ import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.alexmercerind.envirocar.data.remote.envirocar.dto.Feature
-import com.alexmercerind.envirocar.data.remote.envirocar.dto.Properties
-import com.alexmercerind.envirocar.data.remote.envirocar.dto.SensorProperties
 import com.alexmercerind.envirocar.data.remote.envirocar.dto.TrackProperties
 import com.alexmercerind.envirocar.repository.EnviroCarRepository
 import com.alexmercerind.envirocar.util.Constants
